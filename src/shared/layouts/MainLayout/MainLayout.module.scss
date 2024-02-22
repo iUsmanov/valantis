@@ -2,13 +2,13 @@
 	min-height: 100vh;
 	display: grid;
 	grid-template-columns: 1fr minmax(auto, 1100px) 250px 1fr;
-	grid-template-rows: 1fr;
+	grid-template-rows: 1fr 1fr;
 
 	// background: green;
 
 	@media (width <= 762px) {
 		grid-template-columns: 1fr;
-		grid-template-rows: minmax(auto, 200px) 1fr;
+		grid-template-rows: minmax(auto, 200px) 1fr 1fr;
 	}
 }
 
@@ -39,5 +39,18 @@
 
 	@media (width <= 762px) {
 		grid-row: 1 / 2;
+	}
+}
+
+.pagination {
+	// background-color: yellow;
+
+	@media (width > 762px) {
+		grid-column: 2 / 3;
+		grid-row: 2 / 3;
+	}
+
+	@media (width <= 762px) {
+		// grid-row: 1 / 2;
 	}
 }

@@ -31,8 +31,11 @@ export const ProductsPage = memo(() => {
 
 	return (
 		<div>
-			<MainLayout content={<ProductsList products={products} />} filters={<div></div>} />
-			<ProductsPagination />
+			<MainLayout
+				content={<ProductsList products={products} />}
+				filters={<div></div>}
+				pagination={<ProductsPagination />}
+			/>
 		</div>
 	);
 });
