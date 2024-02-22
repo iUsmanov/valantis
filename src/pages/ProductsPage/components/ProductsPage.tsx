@@ -15,7 +15,7 @@ const reducers: ReducersList = {
 export const ProductsPage = memo(() => {
 	const dispatch = useAppDispatch();
 	const s = () => {
-		dispatch(getProductsByIds());
+		dispatch(getProductsByIds(1));
 	};
 	useDynamicModule({ reducers });
 	return (

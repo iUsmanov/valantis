@@ -1,31 +1,40 @@
 import { getUniqArrayItems } from '@/shared/lib/helpers/getUniqArrayItems/getUniqArrayItems';
 import { getProductsByIdsQuery, getProductsIdsQuery } from '../../../api/productsApi';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { getProductsLimit } from '../../selectors/getProductsLimit';
+import { Сommodity } from '@/entities/Product';
+import { ThunkConfig } from '@/app/providers/StoreProvider';
 
-export const getProductsByIds = createAsyncThunk('products/getProductsIds', async (_, thunkApi) => {
-	const { rejectWithValue, dispatch, getState } = thunkApi;
+export const getProductsByIds = createAsyncThunk<Сommodity[], number, ThunkConfig<string>>(
+	'products/getProductsIds',
+	async (pageNumber, thunkApi) => {
+		const { rejectWithValue, dispatch, getState } = thunkApi;
 
-	try {
-		const { result: productsIds } = await dispatch(
-			getProductsIdsQuery({ limit: 10, offset: 10 })
-		).unwrap();
+		const productsLimit = getProductsLimit(getState());
+		const offset = productsLimit * (pageNumber - 1);
 
-		if (!productsIds) {
-			return rejectWithValue('Сервер не вернул данные');
+		try {
+			const { result: productsIds } = await dispatch(
+				getProductsIdsQuery({ limit: productsLimit, offset })
+			).unwrap();
+
+			if (!productsIds) {
+				return rejectWithValue('Сервер не вернул данные');
+			}
+
+			const { result: products } = await dispatch(getProductsByIdsQuery(productsIds)).unwrap();
+
+			if (!products) {
+				return rejectWithValue('Сервер не вернул данные');
+			}
+
+			const uniqProducts = getUniqArrayItems(productsIds);
+
+			// console.log(uniqProducts);
+
+			return uniqProducts;
+		} catch (error) {
+			return rejectWithValue('error');
 		}
-
-		const productsUniqIds = getUniqArrayItems(productsIds);
-
-		const { result: products } = await dispatch(getProductsByIdsQuery(productsUniqIds)).unwrap();
-
-		if (!products) {
-			return rejectWithValue('Сервер не вернул данные');
-		}
-
-		// console.log(products);
-
-		return products;
-	} catch (error) {
-		return rejectWithValue(error);
 	}
-});
+);

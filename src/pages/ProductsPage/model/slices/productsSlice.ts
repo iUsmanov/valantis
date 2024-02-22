@@ -1,15 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ProductsSchema } from '../types/productsSchema';
 import { Сommodity } from '@/entities/Product';
 import { getProductsByIds } from '../services/getProductsByIds/getProductsByIds';
-
-export const initialState: ProductsSchema = {
-	products: [],
-	error: '',
-	isLoading: false,
-	limit: 50,
-	offset: 0,
-};
+import { initialState } from '../../consts/initialState';
 
 export const productsSlice = createSlice({
 	name: 'products',
