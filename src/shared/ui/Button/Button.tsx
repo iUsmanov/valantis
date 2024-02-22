@@ -2,32 +2,24 @@ import { ButtonHTMLAttributes, LegacyRef, ReactNode, forwardRef, memo, useMemo }
 import cls from './Button.module.scss';
 import { Mods, classNames } from '@/shared/lib/classNames/classNames';
 
-type ButtonVariant = 'circle';
-type CircleButtonSize = '40' | '50' | '56' | '25';
+type ButtonVariant = 'primary' | 'outline';
+type CircleButtonSize = 's' | 'm' | 'l' | 'x';
 
-interface ButtonBaseProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	className?: string;
 	variant?: ButtonVariant;
-	shadow?: boolean;
 	children: ReactNode;
+	size?: CircleButtonSize;
 }
-
-interface CircleButton extends ButtonBaseProps {
-	variant: 'circle';
-	size: CircleButtonSize;
-}
-
-type ButtonProps = CircleButton;
 
 const Button = forwardRef((props: ButtonProps, ref: LegacyRef<HTMLButtonElement> | undefined) => {
-	const { className, children, variant = 'circle', size, shadow, ...otherProps } = props;
+	const { className, children, variant = 'primary', size = 'm', ...otherProps } = props;
 
 	const mods: Mods = useMemo(
 		() => ({
-			[cls.shadow]: shadow,
 			[cls[`size-${size}`]]: size,
 		}),
-		[shadow, size]
+		[size]
 	);
 
 	return (

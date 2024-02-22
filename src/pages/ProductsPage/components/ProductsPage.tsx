@@ -7,6 +7,8 @@ import { ReducersList, useDynamicModule } from '@/shared/lib/hooks/useDynamicMod
 import { productsReducer } from '../model/slices/productsSlice';
 import { useSelector } from 'react-redux';
 import { getProducts } from '../model/selectors/getProducts';
+import { ProductsPagination } from '@/features/productsPagination';
+import { Button } from '@/shared/ui/Button/Button';
 
 const reducers: ReducersList = {
 	products: productsReducer,
@@ -22,13 +24,15 @@ export const ProductsPage = memo(() => {
 
 	useDynamicModule({ reducers });
 
-	console.log(products);
-
 	if (!products) return null;
 
 	return (
 		<div>
+			<Button onClick={() => {}} size='m'>
+				Button
+			</Button>
 			<MainLayout content={<ProductsList products={products} />} filters={<div></div>} />
+			<ProductsPagination />
 		</div>
 	);
 });
