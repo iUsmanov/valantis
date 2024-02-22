@@ -30,7 +30,7 @@ export const createReduxStore = (initialState?: StateSchema, asyncReducers?: Red
 				thunk: {
 					extraArgument: extraArg,
 				},
-			}),
+			}).concat(rtkApi.middleware),
 	});
 	// @ts-ignore
 	store.reducerManager = reducerManager;

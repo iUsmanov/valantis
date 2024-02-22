@@ -3,12 +3,16 @@ import { rtkApi } from '@/shared/api/rtkApi';
 import { createReduxStore } from './store';
 import { AnyAction, CombinedState, Reducer, ReducersMapObject } from '@reduxjs/toolkit';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
+import { ProductsSchema } from '@/pages/ProductsPage';
 
 /**
  * StateSchema описывает состояние нашего `store`.
  * */
 export interface StateSchema {
 	[rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
+
+	// asyncState
+	products?: ProductsSchema;
 }
 
 /**
