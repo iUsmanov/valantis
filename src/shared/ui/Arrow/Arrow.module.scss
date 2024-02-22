@@ -1,0 +1,38 @@
+.arrow {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+
+.obj {
+	width: 10px;
+	height: 10px;
+	border-left: 2px solid black;
+	border-top: 2px solid black;
+	transform: rotate(135deg);
+}
+
+.left {
+	transform: rotate(-45deg);
+}
+
+.right {
+	transform: rotate(135deg);
+}
+
+.size-s {
+	width: 8px;
+	height: 8px;
+	border-color: var(--slide-header-color);
+}
+
+.size-l {
+	width: 10px;
+	height: 10px;
+}
+
+.size-m {
+	width: 6px;
+	height: 6px;
+}
