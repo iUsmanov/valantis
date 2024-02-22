@@ -9,3 +9,5 @@ export const ProductsPage = memo(() => {
 		</div>
 	);
 });
+
+// Есть ProductsPage, ProductsList, ProductsFilters
