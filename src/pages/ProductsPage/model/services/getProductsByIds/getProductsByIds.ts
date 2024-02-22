@@ -1,9 +1,9 @@
-import { getUniqArrayItems } from '@/shared/lib/helpers/getUniqArrayItems/getUniqArrayItems';
 import { getProductsByIdsQuery, getProductsIdsQuery } from '../../../api/productsApi';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getProductsLimit } from '../../selectors/getProductsLimit';
 import { Сommodity } from '@/entities/Product';
 import { ThunkConfig } from '@/app/providers/StoreProvider';
+import { getUniqProducts } from '../../../lib/helpers/getUniqProducts';
 
 export const getProductsByIds = createAsyncThunk<Сommodity[], number, ThunkConfig<string>>(
 	'products/getProductsIds',
@@ -28,7 +28,7 @@ export const getProductsByIds = createAsyncThunk<Сommodity[], number, ThunkConf
 				return rejectWithValue('Сервер не вернул данные');
 			}
 
-			const uniqProducts = getUniqArrayItems(productsIds);
+			const uniqProducts: Сommodity[] = getUniqProducts(products);
 
 			// console.log(uniqProducts);
 

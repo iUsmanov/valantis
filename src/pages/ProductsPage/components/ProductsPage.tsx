@@ -1,12 +1,12 @@
 import { ProductsList } from '@/entities/Product';
 import { MainLayout } from '@/shared/layouts';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { getProductsByIds } from '../model/services/getProductsByIds/getProductsByIds';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { ReducersList, useDynamicModule } from '@/shared/lib/hooks/useDynamicModule/useDynamicModule';
 import { productsReducer } from '../model/slices/productsSlice';
-
-const products = [{ id: '1', brand: 'Gucci', name: 'Table', price: 10002 }];
+import { useSelector } from 'react-redux';
+import { getProducts } from '../model/selectors/getProducts';
 
 const reducers: ReducersList = {
 	products: productsReducer,
@@ -14,15 +14,20 @@ const reducers: ReducersList = {
 
 export const ProductsPage = memo(() => {
 	const dispatch = useAppDispatch();
-	const s = () => {
+	const products = useSelector(getProducts);
+
+	useEffect(() => {
 		dispatch(getProductsByIds(1));
-	};
+	}, [dispatch]);
+
 	useDynamicModule({ reducers });
+
+	console.log(products);
+
+	if (!products) return null;
+
 	return (
 		<div>
-			<button type='button' onClick={s}>
-				DAds
-			</button>
 			<MainLayout content={<ProductsList products={products} />} filters={<div></div>} />
 		</div>
 	);
