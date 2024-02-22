@@ -39,6 +39,7 @@ export function createReducerManager(initialReducers: ReducersObject): ReducerMa
 				return;
 			}
 
+			// @ts-ignore
 			reducers[key] = reducer;
 			combinedReducer = combineReducers(reducers);
 		},

@@ -2,7 +2,6 @@
 import { AnyAction, CombinedState, Reducer, configureStore } from '@reduxjs/toolkit';
 import { ReducersObject, StateSchema, ThunkExtraArg } from './StateSchema';
 import { createReducerManager } from './reducerManager';
-import { HistoryReducer } from '@/widgets/History';
 
 /**
  * @param children - что мы хотим обернуть в Provider?
@@ -13,7 +12,6 @@ import { HistoryReducer } from '@/widgets/History';
  * */
 export const createReduxStore = (initialState?: StateSchema, asyncReducers?: ReducersObject) => {
 	const rootReducer: ReducersObject = {
-		history: HistoryReducer,
 		...asyncReducers,
 	};
 

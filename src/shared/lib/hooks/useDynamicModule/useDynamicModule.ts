@@ -31,6 +31,7 @@ export const useDynamicModule = (props: useDynamicModuleProps) => {
 	useEffect(() => {
 		Object.entries(reducers).forEach(([name, reducer]) => {
 			if (store.getState()[name as StateSchemaKey]) return;
+			// @ts-ignore
 			store.reducerManager.add(name as StateSchemaKey, reducer);
 			dispatch({ type: `@INIT ${name} reducer` });
 		});
