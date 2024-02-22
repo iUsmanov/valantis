@@ -3,9 +3,9 @@
 	outline-color: none;
 
 	&:disabled {
-		opacity: 0.5;
+		opacity: 0.7;
 		cursor: default;
-
+		color: black;
 	}
 }
 
@@ -22,7 +22,7 @@
 // }
 
 .size-m{
-	width: 50px;
+	width: 70px;
 	height: 35px;
 	border-radius: 15%;
 }

@@ -10,6 +10,7 @@ import { getProducts } from '../model/selectors/getProducts';
 import { ProductsPagination } from '@/features/productsPagination';
 import { getProductsLength } from '../model/services/getProductsLength/getProductsLength';
 import { getProductsTotalPages } from '../model/selectors/getProductsTotalPages';
+import { getProductsPage } from '../model/selectors/getProductsPage';
 
 const reducers: ReducersList = {
 	products: productsReducer,
@@ -19,6 +20,11 @@ export const ProductsPage = memo(() => {
 	const dispatch = useAppDispatch();
 	const products = useSelector(getProducts);
 	const productsTotalPages = useSelector(getProductsTotalPages);
+	const productsPage = useSelector(getProductsPage);
+
+	const onLoadPage = (page: number) => {
+		dispatch(getProductsByIds(page));
+	};
 
 	useEffect(() => {
 		dispatch(getProductsByIds(1));
@@ -34,7 +40,13 @@ export const ProductsPage = memo(() => {
 			<MainLayout
 				content={<ProductsList products={products} />}
 				filters={<div></div>}
-				pagination={<ProductsPagination />}
+				pagination={
+					<ProductsPagination
+						totalPages={productsTotalPages}
+						productsPage={productsPage}
+						onLoadPage={onLoadPage}
+					/>
+				}
 			/>
 		</div>
 	);
