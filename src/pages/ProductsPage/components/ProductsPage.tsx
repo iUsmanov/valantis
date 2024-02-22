@@ -8,7 +8,8 @@ import { productsReducer } from '../model/slices/productsSlice';
 import { useSelector } from 'react-redux';
 import { getProducts } from '../model/selectors/getProducts';
 import { ProductsPagination } from '@/features/productsPagination';
-import { Button } from '@/shared/ui/Button/Button';
+import { getProductsLength } from '../model/services/getProductsLength/getProductsLength';
+import { getProductsTotalPages } from '../model/selectors/getProductsTotalPages';
 
 const reducers: ReducersList = {
 	products: productsReducer,
@@ -17,20 +18,19 @@ const reducers: ReducersList = {
 export const ProductsPage = memo(() => {
 	const dispatch = useAppDispatch();
 	const products = useSelector(getProducts);
+	const productsTotalPages = useSelector(getProductsTotalPages);
 
 	useEffect(() => {
 		dispatch(getProductsByIds(1));
+		dispatch(getProductsLength());
 	}, [dispatch]);
 
 	useDynamicModule({ reducers });
 
-	if (!products) return null;
+	if (!products || productsTotalPages < 2) return null;
 
 	return (
 		<div>
-			<Button onClick={() => {}} size='m'>
-				Button
-			</Button>
 			<MainLayout content={<ProductsList products={products} />} filters={<div></div>} />
 			<ProductsPagination />
 		</div>

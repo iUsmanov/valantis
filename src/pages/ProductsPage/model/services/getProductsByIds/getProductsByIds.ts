@@ -5,7 +5,12 @@ import { Сommodity } from '@/entities/Product';
 import { ThunkConfig } from '@/app/providers/StoreProvider';
 import { getUniqProducts } from '../../../lib/helpers/getUniqProducts';
 
-export const getProductsByIds = createAsyncThunk<Сommodity[], number, ThunkConfig<string>>(
+export interface GetProductsByIdsReturn {
+	page: number;
+	products: Сommodity[];
+}
+
+export const getProductsByIds = createAsyncThunk<GetProductsByIdsReturn, number, ThunkConfig<string>>(
 	'products/getProductsIds',
 	async (pageNumber, thunkApi) => {
 		const { rejectWithValue, dispatch, getState } = thunkApi;
@@ -32,7 +37,10 @@ export const getProductsByIds = createAsyncThunk<Сommodity[], number, ThunkConf
 
 			// console.log(uniqProducts);
 
-			return uniqProducts;
+			return {
+				page: pageNumber,
+				products: uniqProducts,
+			};
 		} catch (error) {
 			return rejectWithValue('error');
 		}

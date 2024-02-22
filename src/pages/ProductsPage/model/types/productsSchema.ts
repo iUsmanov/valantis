@@ -5,5 +5,6 @@ export interface ProductsSchema {
 	isLoading: boolean;
 	error?: string;
 	limit: number;
-	offset: number;
+	page: number;
+	totalPages: number;
 }

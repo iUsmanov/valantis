@@ -5,5 +5,6 @@ export const initialState: ProductsSchema = {
 	error: '',
 	isLoading: false,
 	limit: 50,
-	offset: 0,
+	page: 1,
+	totalPages: 1,
 };
