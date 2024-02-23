@@ -7,12 +7,7 @@ import { productsPaginationActions } from '@/features/productsPagination';
 import { getProductsIds } from '../getProductsIds/getProductsIds';
 import { getProductsIds as getProductsIdsSelector } from '../../selectors/getProductsIds';
 
-// export interface GetProductsByIdsReturn {
-// 	page: number;
-// 	products: Сommodity[];
-// }
-
-export const getProductsByIds = createAsyncThunk<Сommodity[], number, ThunkConfig<string>>(
+export const getProductsByIds /* : any */ = createAsyncThunk<Сommodity[], number, ThunkConfig<string>>(
 	'products/getProductsByIds',
 	async (pageNumber, thunkApi) => {
 		const { rejectWithValue, dispatch, getState } = thunkApi;
@@ -36,7 +31,8 @@ export const getProductsByIds = createAsyncThunk<Сommodity[], number, ThunkConf
 			dispatch(productsPaginationActions.changePage(pageNumber));
 			return uniqProducts;
 		} catch (error) {
-			getProductsByIds(pageNumber);
+			// const dsa = dispatch(getProductsByIds(pageNumber));
+			// return dsa.payload;
 			return rejectWithValue('error');
 		}
 	}

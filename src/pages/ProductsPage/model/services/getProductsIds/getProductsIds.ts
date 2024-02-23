@@ -8,7 +8,7 @@ import {
 } from '@/widgets/productsFilters';
 import { getProductsLimit } from '@/features/productsPagination';
 
-export const getProductsIds = createAsyncThunk<string[], number, ThunkConfig<string>>(
+export const getProductsIds /* : any */ = createAsyncThunk<string[], number, ThunkConfig<string>>(
 	'products/getProductsIds',
 	async (pageNumber, thunkApi) => {
 		const { rejectWithValue, dispatch, getState } = thunkApi;
@@ -45,6 +45,7 @@ export const getProductsIds = createAsyncThunk<string[], number, ThunkConfig<str
 
 			return productsIds;
 		} catch (error) {
+			// return dispatch(getProductsIds(pageNumber));
 			return rejectWithValue('error');
 		}
 	}

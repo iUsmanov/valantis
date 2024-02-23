@@ -10,7 +10,6 @@ import { getProducts } from '../model/selectors/getProducts';
 import {
 	ProductsPagination,
 	getProductsLength,
-	getProductsPage,
 	getProductsTotalPages,
 	productsPaginationReducer,
 } from '@/features/productsPagination';
@@ -32,10 +31,9 @@ const reducers: ReducersList = {
 export const ProductsPage = memo(() => {
 	const dispatch = useAppDispatch();
 	const products = useSelector(getProducts);
-	const productsTotalPages = useSelector(getProductsTotalPages);
-	const productsPage = useSelector(getProductsPage);
 	const productsIsLoading = useSelector(getProductsIsLoading);
 	const productsError = useSelector(getProductsError);
+	const productsTotalPages = useSelector(getProductsTotalPages);
 	const productsFilterByBrand = useSelector(getProductsFilterByBrand);
 	const productsFilterByName = useSelector(getProductsFilterByName);
 	const productsFilterByPrice = useSelector(getProductsFilterByPrice);
@@ -99,12 +97,7 @@ export const ProductsPage = memo(() => {
 				}
 				filters={<ProductsFilters onLoadPage={onLoadPage} />}
 				pagination={
-					<ProductsPagination
-						canShowPagination={canShowPagination}
-						totalPages={productsTotalPages}
-						productsPage={productsPage}
-						onLoadPage={onLoadPage}
-					/>
+					<ProductsPagination canShowPagination={canShowPagination} onLoadPage={onLoadPage} />
 				}
 			/>
 		</div>

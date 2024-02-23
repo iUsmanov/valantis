@@ -3,17 +3,20 @@ import { classNames } from '@/shared/lib/classNames/classNames';
 import cls from './ProductsPagination.module.scss';
 import { HStack } from '@/shared/ui/Stack';
 import { Button } from '@/shared/ui/Button/Button';
+import { getProductsPage } from '../../model/selectors/getProductsPage';
+import { useSelector } from 'react-redux';
+import { getProductsTotalPages } from '../../model/selectors/getProductsTotalPages';
 
 interface ProductsPaginationProps {
 	className?: string;
-	totalPages: number;
-	productsPage: number;
 	onLoadPage: (page: number) => void;
 	canShowPagination?: boolean;
 }
 
 export const ProductsPagination = memo((props: ProductsPaginationProps) => {
-	const { className, totalPages, productsPage, onLoadPage, canShowPagination } = props;
+	const { className, onLoadPage, canShowPagination } = props;
+	const productsPage = useSelector(getProductsPage);
+	const totalPages = useSelector(getProductsTotalPages);
 
 	if (!canShowPagination) {
 		return null;
