@@ -1,3 +1,1 @@
-export interface Products {
-
-}
+export interface Products {}

@@ -1,4 +1,4 @@
-import { Сommodity } from '@/entities/Product';
+import { СommodityFilters, Сommodity } from '@/entities/Product';
 
 export interface ProductsSchema {
 	products: Сommodity[];
@@ -7,4 +7,5 @@ export interface ProductsSchema {
 	limit: number;
 	page: number;
 	totalPages: number;
+	filters: СommodityFilters;
 }

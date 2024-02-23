@@ -4,13 +4,15 @@ import { memo, useEffect } from 'react';
 import { getProductsByIds } from '../model/services/getProductsByIds/getProductsByIds';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { ReducersList, useDynamicModule } from '@/shared/lib/hooks/useDynamicModule/useDynamicModule';
-import { productsReducer } from '../model/slices/productsSlice';
+import { productsActions, productsReducer } from '../model/slices/productsSlice';
 import { useSelector } from 'react-redux';
 import { getProducts } from '../model/selectors/getProducts';
 import { ProductsPagination } from '@/features/productsPagination';
 import { getProductsLength } from '../model/services/getProductsLength/getProductsLength';
 import { getProductsTotalPages } from '../model/selectors/getProductsTotalPages';
 import { getProductsPage } from '../model/selectors/getProductsPage';
+import { ProductsFilters } from '@/widgets/productsFilters';
+import { getProductsFilters } from '../model/selectors/getProductsFilters';
 
 const reducers: ReducersList = {
 	products: productsReducer,
@@ -21,9 +23,22 @@ export const ProductsPage = memo(() => {
 	const products = useSelector(getProducts);
 	const productsTotalPages = useSelector(getProductsTotalPages);
 	const productsPage = useSelector(getProductsPage);
+	const productsFilters = useSelector(getProductsFilters);
 
 	const onLoadPage = (page: number) => {
 		dispatch(getProductsByIds(page));
+	};
+
+	const onChangeFilterHasName = () => {
+		dispatch(productsActions.changeFilterHasName());
+	};
+
+	const onChangeFilterBrand = (brand: string) => {
+		dispatch(productsActions.changeFilterBrand(brand));
+	};
+
+	const onChangeFilterPrice = (price: number) => {
+		dispatch(productsActions.changeFilterPrice(price));
 	};
 
 	useEffect(() => {
@@ -33,13 +48,20 @@ export const ProductsPage = memo(() => {
 
 	useDynamicModule({ reducers });
 
-	if (!products || productsTotalPages < 2) return null;
+	if (!products || productsTotalPages < 1) return null;
 
 	return (
 		<div>
 			<MainLayout
 				content={<ProductsList products={products} />}
-				filters={<div></div>}
+				filters={
+					<ProductsFilters
+						filters={productsFilters}
+						onChangeFilterHasName={onChangeFilterHasName}
+						onChangeFilterBrand={onChangeFilterBrand}
+						onChangeFilterPrice={onChangeFilterPrice}
+					/>
+				}
 				pagination={
 					<ProductsPagination
 						totalPages={productsTotalPages}
@@ -58,3 +80,9 @@ export const ProductsPage = memo(() => {
 // ProductsList - entities
 // ProductsFilters - widget
 // ProductsPagination - feature
+
+// 3 Фильтры такие:
+
+// Есть имя ?
+// Введённое название бренда соответ ?
+// Введённая цена соответ ?

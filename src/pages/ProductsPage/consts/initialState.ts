@@ -6,5 +6,10 @@ export const initialState: ProductsSchema = {
 	isLoading: false,
 	limit: 50,
 	page: 1,
-	totalPages: 1,
+	totalPages: 0,
+	filters: {
+		filterHasName: false,
+		filterBrand: undefined,
+		filterPrice: undefined,
+	},
 };

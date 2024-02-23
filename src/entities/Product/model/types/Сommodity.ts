@@ -4,3 +4,9 @@ export interface Сommodity {
 	brand: string;
 	price: number;
 }
+
+export interface СommodityFilters {
+	filterHasName: boolean;
+	filterBrand?: string;
+	filterPrice?: number;
+}

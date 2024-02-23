@@ -10,12 +10,14 @@ export const productsSlice = createSlice({
 	name: 'products',
 	initialState,
 	reducers: {
-		changeOffset: (state, action: PayloadAction<'plus' | 'minus'>) => {
-			// if (action.payload === 'plus') {
-			// 	state.offset = state.offset + state.limit;
-			// } else {
-			// 	state.offset = state.offset - state.limit;
-			// }
+		changeFilterHasName: (state) => {
+			state.filters.filterHasName = !state.filters.filterHasName;
+		},
+		changeFilterBrand: (state, action: PayloadAction<string>) => {
+			state.filters.filterBrand = action.payload;
+		},
+		changeFilterPrice: (state, action: PayloadAction<number>) => {
+			state.filters.filterPrice = action.payload;
 		},
 	},
 	extraReducers(builder) {
