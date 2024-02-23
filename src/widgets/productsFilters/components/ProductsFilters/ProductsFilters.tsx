@@ -30,17 +30,17 @@ export const ProductsFilters = memo((props: ProductsFiltersProps) => {
 	const productsFilterByBrand = useSelector(getProductsFilterByBrand);
 	const productsFilterByPrice = useSelector(getProductsFilterByPrice);
 
-	const sonChangeFilterBrand = (brand: string) => {
+	const onChangeFilterBrand = (brand: string) => {
 		dispatch(productsFiltersActions.changeFilterBrand(brand));
 		onLoadPage(1);
 	};
 
-	const sonChangeFilterHasName = (name: string) => {
+	const onChangeFilterHasName = (name: string) => {
 		dispatch(productsFiltersActions.changeFilterName(name));
 		onLoadPage(1);
 	};
 
-	const sonChangeFilterPrice = (price: string) => {
+	const onChangeFilterPrice = (price: string) => {
 		dispatch(productsFiltersActions.changeFilterPrice(price));
 		onLoadPage(1);
 	};
@@ -49,9 +49,9 @@ export const ProductsFilters = memo((props: ProductsFiltersProps) => {
 
 	return (
 		<VStack gap='16' className={classNames(cls.productsFilters, {}, [className])}>
-			<Input label='Имя' value={productsFilterByName} onChange={sonChangeFilterHasName} />
-			<Input label='Бренд' value={productsFilterByBrand} onChange={sonChangeFilterBrand} />
-			<Input label='Цена' value={productsFilterByPrice} onChange={sonChangeFilterPrice} />
+			<Input label='Имя' value={productsFilterByName} onChange={onChangeFilterHasName} />
+			<Input label='Бренд' value={productsFilterByBrand} onChange={onChangeFilterBrand} />
+			<Input label='Цена' value={productsFilterByPrice} onChange={onChangeFilterPrice} />
 		</VStack>
 	);
 });

@@ -9,10 +9,15 @@ interface ProductsPaginationProps {
 	totalPages: number;
 	productsPage: number;
 	onLoadPage: (page: number) => void;
+	canShowPagination?: boolean;
 }
 
 export const ProductsPagination = memo((props: ProductsPaginationProps) => {
-	const { className, totalPages, productsPage, onLoadPage } = props;
+	const { className, totalPages, productsPage, onLoadPage, canShowPagination } = props;
+
+	if (!canShowPagination) {
+		return null;
+	}
 
 	return (
 		<div className={classNames(cls.productsPagination, {}, [className])}>

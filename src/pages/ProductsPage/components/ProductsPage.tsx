@@ -14,7 +14,12 @@ import {
 	getProductsTotalPages,
 	productsPaginationReducer,
 } from '@/features/productsPagination';
-import { ProductsFilters } from '@/widgets/productsFilters';
+import {
+	ProductsFilters,
+	getProductsFilterByBrand,
+	getProductsFilterByName,
+	getProductsFilterByPrice,
+} from '@/widgets/productsFilters';
 import { getProductsIsLoading } from '../model/selectors/getProductsIsLoading';
 import { useDebounce } from '@/shared/lib/hooks/useDebounce/useDebounce';
 import { getProductsError } from '../model/selectors/getProductsError';
@@ -31,6 +36,9 @@ export const ProductsPage = memo(() => {
 	const productsPage = useSelector(getProductsPage);
 	const productsIsLoading = useSelector(getProductsIsLoading);
 	const productsError = useSelector(getProductsError);
+	const productsFilterByBrand = useSelector(getProductsFilterByBrand);
+	const productsFilterByName = useSelector(getProductsFilterByName);
+	const productsFilterByPrice = useSelector(getProductsFilterByPrice);
 
 	const isLoading = useMemo(() => {
 		if (productsIsLoading || products === undefined) {
@@ -39,6 +47,21 @@ export const ProductsPage = memo(() => {
 			return false;
 		}
 	}, [products, productsIsLoading]);
+
+	const canShowPagination = useMemo(() => {
+		if (isLoading) return false;
+		if (!products?.length) return false;
+		if (productsFilterByBrand || productsFilterByName || productsFilterByPrice) {
+			return false;
+		}
+		return true;
+	}, [
+		isLoading,
+		products?.length,
+		productsFilterByBrand,
+		productsFilterByName,
+		productsFilterByPrice,
+	]);
 
 	const onLoadPage = useDebounce((page: number) => {
 		dispatch(getProductsByIds(page));
@@ -76,13 +99,12 @@ export const ProductsPage = memo(() => {
 				}
 				filters={<ProductsFilters onLoadPage={onLoadPage} />}
 				pagination={
-					!isLoading && products?.length ? (
-						<ProductsPagination
-							totalPages={productsTotalPages}
-							productsPage={productsPage}
-							onLoadPage={onLoadPage}
-						/>
-					) : undefined
+					<ProductsPagination
+						canShowPagination={canShowPagination}
+						totalPages={productsTotalPages}
+						productsPage={productsPage}
+						onLoadPage={onLoadPage}
+					/>
 				}
 			/>
 		</div>
