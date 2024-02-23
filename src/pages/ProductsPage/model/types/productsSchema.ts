@@ -4,7 +4,4 @@ export interface ProductsSchema {
 	products: Сommodity[];
 	isLoading: boolean;
 	error?: string;
-	limit: number;
-	page: number;
-	totalPages: number;
 }

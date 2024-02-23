@@ -1,11 +1,10 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+	getFilteredProductsIdsQuery,
 	getProductsByIdsQuery,
 	getProductsIdsQuery,
-	getFilteredProductsIdsQuery,
-} from '../../../api/productsApi';
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getProductsLimit } from '../../selectors/getProductsLimit';
-import { Сommodity } from '@/entities/Product';
+	Сommodity,
+} from '@/entities/Product';
 import { ThunkConfig } from '@/app/providers/StoreProvider';
 import { getUniqProducts } from '../../../lib/helpers/getUniqProducts';
 import {
@@ -13,13 +12,14 @@ import {
 	getProductsFilterByName,
 	getProductsFilterByPrice,
 } from '@/widgets/productsFilters';
+import { getProductsLimit, productsPaginationActions } from '@/features/productsPagination';
 
-export interface GetProductsByIdsReturn {
-	page: number;
-	products: Сommodity[];
-}
+// export interface GetProductsByIdsReturn {
+// 	page: number;
+// 	products: Сommodity[];
+// }
 
-export const getProductsByIds = createAsyncThunk<GetProductsByIdsReturn, number, ThunkConfig<string>>(
+export const getProductsByIds = createAsyncThunk<Сommodity[], number, ThunkConfig<string>>(
 	'products/getProductsIds',
 	async (pageNumber, thunkApi) => {
 		const { rejectWithValue, dispatch, getState } = thunkApi;
@@ -62,10 +62,8 @@ export const getProductsByIds = createAsyncThunk<GetProductsByIdsReturn, number,
 
 			const uniqProducts: Сommodity[] = getUniqProducts(products);
 
-			return {
-				page: pageNumber,
-				products: uniqProducts,
-			};
+			dispatch(productsPaginationActions.changePage(pageNumber));
+			return uniqProducts;
 		} catch (error) {
 			getProductsByIds(pageNumber);
 			return rejectWithValue('error');

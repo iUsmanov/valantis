@@ -1,4 +1,5 @@
 import { StateSchema } from '@/app/providers/StoreProvider';
 import { initialState } from '../../consts/initialState';
 
-export const getProductsLimit = (state: StateSchema) => state.products?.limit || initialState.limit;
+export const getProductsLimit = (state: StateSchema) =>
+	state.productsPagination?.limit || initialState.limit;

@@ -1,7 +1,7 @@
-import { getProductsIdsQuery } from '../../../api/productsApi';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from '@/app/providers/StoreProvider';
 import { getProductsLimit } from '../../selectors/getProductsLimit';
+import { getProductsIdsQuery } from '@/entities/Product';
 
 export const getProductsLength = createAsyncThunk<number, void, ThunkConfig<string>>(
 	'products/getProductsLength',
@@ -19,7 +19,7 @@ export const getProductsLength = createAsyncThunk<number, void, ThunkConfig<stri
 				return rejectWithValue('Сервер не вернул данные');
 			}
 
-			console.log(productsIds.length);
+			// console.log(productsIds.length);
 
 			return Math.ceil(productsIds.length / productsLimit);
 		} catch (error) {

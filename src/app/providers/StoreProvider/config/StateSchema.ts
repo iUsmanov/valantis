@@ -5,6 +5,7 @@ import { AnyAction, CombinedState, Reducer, ReducersMapObject } from '@reduxjs/t
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { ProductsSchema } from '@/pages/ProductsPage';
 import { ProductsFiltersSchema } from '@/widgets/productsFilters';
+import { ProductsPaginationSchema } from '@/features/productsPagination';
 
 /**
  * StateSchema описывает состояние нашего `store`.
@@ -15,6 +16,7 @@ export interface StateSchema {
 	// asyncState
 	productsFilters?: ProductsFiltersSchema;
 	products?: ProductsSchema;
+	productsPagination?: ProductsPaginationSchema;
 }
 
 /**

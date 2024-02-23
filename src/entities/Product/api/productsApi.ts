@@ -1,6 +1,6 @@
-// #featureFlags
 import { rtkApi } from '@/shared/api/rtkApi';
-import { Сommodity } from '@/entities/Product';
+import { Сommodity } from '../model/types/Сommodity';
+// eslint-disable-next-line fsd-paths-guard/hierarchy-imports-between-layers
 import { ProductsFiltersSchema } from '@/widgets/productsFilters';
 
 interface GetProductsIdsOptions {

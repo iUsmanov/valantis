@@ -1,10 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import {
-	GetProductsByIdsReturn,
-	getProductsByIds,
-} from '../services/getProductsByIds/getProductsByIds';
+import { getProductsByIds } from '../services/getProductsByIds/getProductsByIds';
 import { initialState } from '../../consts/initialState';
-import { getProductsLength } from '../services/getProductsLength/getProductsLength';
+import { Сommodity } from '@/entities/Product';
 
 export const productsSlice = createSlice({
 	name: 'products',
@@ -17,28 +14,14 @@ export const productsSlice = createSlice({
 				state.error = undefined;
 				state.isLoading = true;
 			})
-			.addCase(
-				getProductsByIds.fulfilled,
-				(state, action: PayloadAction<GetProductsByIdsReturn>) => {
-					state.page = action.payload.page;
-					state.products = action.payload.products;
-					state.isLoading = false;
-				}
-			)
+			.addCase(getProductsByIds.fulfilled, (state, action: PayloadAction<Сommodity[]>) => {
+				state.products = action.payload;
+				state.isLoading = false;
+			})
 			.addCase(getProductsByIds.rejected, (state, action) => {
 				state.isLoading = false;
 				const s = String(action.payload);
 				state.error = s;
-			})
-			// ==============================================
-			.addCase(getProductsLength.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(getProductsLength.fulfilled, (state, action: PayloadAction<number>) => {
-				state.totalPages = action.payload;
-			})
-			.addCase(getProductsLength.rejected, (state, action) => {
-				state.error = String(action.payload);
 			});
 	},
 });

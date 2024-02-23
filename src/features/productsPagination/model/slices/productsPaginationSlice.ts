@@ -1,32 +1,29 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ProductsPaginationSchema } from '../types/productsPaginationSchema';
-
-export const initialState: ProductsPaginationSchema = {
-	page: 1,
-};
+import { getProductsLength } from '../services/getProductsLength/getProductsLength';
+import { initialState } from '../../consts/initialState';
 
 export const productsPaginationSlice = createSlice({
 	name: 'productsPagination',
 	initialState,
 	reducers: {
-		template: (state, action: PayloadAction<string>) => {},
+		changePage: (state, action: PayloadAction<number>) => {
+			state.page = action.payload;
+		},
 	},
-	// extraReducers(builder) {
-	// 	builder
-	// 		.addCase(.pending, (state) => {
-	// 			state.data = undefined;
-	// 			state.error = undefined;
-	// 			state.isLoading = true;
-	// 		})
-	// 		.addCase(.fulfilled, (state, action: PayloadAction<>) => {
-	// 			state.data = action.payload;
-	// 			state.isLoading = false;
-	// 		})
-	// 		.addCase(.rejected, (state, action) => {
-	// 			state.error = action.payload;
-	// 			state.isLoading = false;
-	// 		});
-	// },
+	extraReducers(builder) {
+		builder
+			.addCase(getProductsLength.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(getProductsLength.fulfilled, (state, action: PayloadAction<number>) => {
+				state.totalPages = action.payload;
+				state.isLoading = false;
+			})
+			.addCase(getProductsLength.rejected, (state, action) => {
+				state.error = String(action.payload);
+				state.isLoading = false;
+			});
+	},
 });
 
 export const { actions: productsPaginationActions } = productsPaginationSlice;

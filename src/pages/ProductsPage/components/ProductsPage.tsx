@@ -7,10 +7,13 @@ import { ReducersList, useDynamicModule } from '@/shared/lib/hooks/useDynamicMod
 import { productsReducer } from '../model/slices/productsSlice';
 import { useSelector } from 'react-redux';
 import { getProducts } from '../model/selectors/getProducts';
-import { ProductsPagination } from '@/features/productsPagination';
-import { getProductsLength } from '../model/services/getProductsLength/getProductsLength';
-import { getProductsTotalPages } from '../model/selectors/getProductsTotalPages';
-import { getProductsPage } from '../model/selectors/getProductsPage';
+import {
+	ProductsPagination,
+	getProductsLength,
+	getProductsPage,
+	getProductsTotalPages,
+	productsPaginationReducer,
+} from '@/features/productsPagination';
 import { ProductsFilters } from '@/widgets/productsFilters';
 import { getProductsIsLoading } from '../model/selectors/getProductsIsLoading';
 import { useDebounce } from '@/shared/lib/hooks/useDebounce/useDebounce';
@@ -19,6 +22,7 @@ import cls from './ProductsPage.module.scss';
 
 const reducers: ReducersList = {
 	products: productsReducer,
+	productsPagination: productsPaginationReducer,
 };
 
 export const ProductsPage = memo(() => {
@@ -34,23 +38,31 @@ export const ProductsPage = memo(() => {
 	}, 600);
 
 	useEffect(() => {
-		dispatch(getProductsByIds(1));
 		dispatch(getProductsLength());
+		dispatch(getProductsByIds(1));
 	}, [dispatch]);
 
 	useDynamicModule({ reducers });
 
+	// useEffect(() => {
+	// 	const s = setInterval(() => {
+	// 		console.log(products);
+	// 	}, 50);
+
+	// 	return () => clearInterval(s);
+	// }, [dispatch, products]);
+
 	if (/* !products ||  */ productsTotalPages < 1) {
-		return <div className={cls.loader}>Товаров нет</div>;
+		return <div className={cls.overlay}>Товаров нет</div>;
 	}
 
 	// if (productsIsLoading || !products.length || productsTotalPages < 1) {
-	// 	return <div className={cls.loader}>Loading...</div>;
+	// 	return <div className={cls.overlay}>Loading...</div>;
 	// }
 
-	if (productsError) {
-		return <div className={cls.loader}>Произошла ошибка</div>;
-	}
+	// if (productsError) {
+	// 	return <div className={cls.overlay}>Произошла ошибка</div>;
+	// }
 
 	return (
 		<div>
@@ -58,7 +70,7 @@ export const ProductsPage = memo(() => {
 				content={<ProductsList isLoading={productsIsLoading} products={products} />}
 				filters={<ProductsFilters onLoadPage={onLoadPage} />}
 				pagination={
-					productsIsLoading ? (
+					!productsIsLoading ? (
 						<ProductsPagination
 							totalPages={productsTotalPages}
 							productsPage={productsPage}
