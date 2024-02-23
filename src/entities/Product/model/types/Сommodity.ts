@@ -8,5 +8,5 @@ export interface Сommodity {
 export interface СommodityFilters {
 	filterHasName: boolean;
 	filterBrand?: string;
-	filterPrice?: number;
+	filterPrice?: string;
 }

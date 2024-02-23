@@ -37,7 +37,7 @@ export const ProductsPage = memo(() => {
 		dispatch(productsActions.changeFilterBrand(brand));
 	};
 
-	const onChangeFilterPrice = (price: number) => {
+	const onChangeFilterPrice = (price: string) => {
 		dispatch(productsActions.changeFilterPrice(price));
 	};
 

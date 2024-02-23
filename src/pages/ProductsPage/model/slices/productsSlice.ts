@@ -16,7 +16,7 @@ export const productsSlice = createSlice({
 		changeFilterBrand: (state, action: PayloadAction<string>) => {
 			state.filters.filterBrand = action.payload;
 		},
-		changeFilterPrice: (state, action: PayloadAction<number>) => {
+		changeFilterPrice: (state, action: PayloadAction<string>) => {
 			state.filters.filterPrice = action.payload;
 		},
 	},
