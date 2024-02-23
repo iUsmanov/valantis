@@ -48,7 +48,7 @@ const productsApi = rtkApi.injectEndpoints({
 					action: 'filter',
 					params: {
 						price: filters.filterPrice ? Number(filters.filterPrice) : undefined,
-						product: filters.filterName ? 'Кольцо' : undefined,
+						product: filters.filterName ? filters.filterName : undefined,
 						brand: filters.filterBrand ? filters.filterBrand : undefined,
 					},
 				},

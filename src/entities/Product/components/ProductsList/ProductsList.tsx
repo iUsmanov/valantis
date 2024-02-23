@@ -8,10 +8,15 @@ import { Product } from '../Product/Product';
 interface ProductsListProps {
 	className?: string;
 	products: Сommodity[];
+	isLoading?: boolean;
 }
 
 export const ProductsList = memo((props: ProductsListProps) => {
-	const { className, products } = props;
+	const { className, products, isLoading } = props;
+
+	if (isLoading) {
+		return <div className={cls.loader}>Loading...</div>;
+	}
 
 	return (
 		<HStack Tag='section' wrap='wrap' gap='16' className={classNames(cls.products, {}, [className])}>

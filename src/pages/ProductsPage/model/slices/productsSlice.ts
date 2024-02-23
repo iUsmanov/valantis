@@ -36,11 +36,9 @@ export const productsSlice = createSlice({
 			})
 			.addCase(getProductsLength.fulfilled, (state, action: PayloadAction<number>) => {
 				state.totalPages = action.payload;
-				state.isLoading = false;
 			})
 			.addCase(getProductsLength.rejected, (state, action) => {
 				const s = String(action.payload);
-				state.isLoading = false;
 				state.error = s;
 			});
 	},

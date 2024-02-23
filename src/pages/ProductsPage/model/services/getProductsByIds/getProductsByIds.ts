@@ -62,8 +62,6 @@ export const getProductsByIds = createAsyncThunk<GetProductsByIdsReturn, number,
 
 			const uniqProducts: Сommodity[] = getUniqProducts(products);
 
-			// console.log(uniqProducts);
-
 			return {
 				page: pageNumber,
 				products: uniqProducts,

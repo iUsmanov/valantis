@@ -13,8 +13,9 @@ import { getProductsTotalPages } from '../model/selectors/getProductsTotalPages'
 import { getProductsPage } from '../model/selectors/getProductsPage';
 import { ProductsFilters } from '@/widgets/productsFilters';
 import { getProductsIsLoading } from '../model/selectors/getProductsIsLoading';
-import cls from './ProductsPage.module.scss';
 import { useDebounce } from '@/shared/lib/hooks/useDebounce/useDebounce';
+import { getProductsError } from '../model/selectors/getProductsError';
+import cls from './ProductsPage.module.scss';
 
 const reducers: ReducersList = {
 	products: productsReducer,
@@ -26,6 +27,7 @@ export const ProductsPage = memo(() => {
 	const productsTotalPages = useSelector(getProductsTotalPages);
 	const productsPage = useSelector(getProductsPage);
 	const productsIsLoading = useSelector(getProductsIsLoading);
+	const productsError = useSelector(getProductsError);
 
 	const onLoadPage = useDebounce((page: number) => {
 		dispatch(getProductsByIds(page));
@@ -38,25 +40,31 @@ export const ProductsPage = memo(() => {
 
 	useDynamicModule({ reducers });
 
-	// if (!products || productsTotalPages < 1) {
-	// 	return null;
+	if (/* !products ||  */ productsTotalPages < 1) {
+		return <div className={cls.loader}>Товаров нет</div>;
+	}
+
+	// if (productsIsLoading || !products.length || productsTotalPages < 1) {
+	// 	return <div className={cls.loader}>Loading...</div>;
 	// }
 
-	if (productsIsLoading || !products.length || productsTotalPages < 1) {
-		return <div className={cls.loader}>Loading...</div>;
+	if (productsError) {
+		return <div className={cls.loader}>Произошла ошибка</div>;
 	}
 
 	return (
 		<div>
 			<MainLayout
-				content={<ProductsList products={products} />}
+				content={<ProductsList isLoading={productsIsLoading} products={products} />}
 				filters={<ProductsFilters onLoadPage={onLoadPage} />}
 				pagination={
-					<ProductsPagination
-						totalPages={productsTotalPages}
-						productsPage={productsPage}
-						onLoadPage={onLoadPage}
-					/>
+					productsIsLoading ? (
+						<ProductsPagination
+							totalPages={productsTotalPages}
+							productsPage={productsPage}
+							onLoadPage={onLoadPage}
+						/>
+					) : undefined
 				}
 			/>
 		</div>
