@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { getProductsByIds } from '../services/getProductsByIds/getProductsByIds';
 import { initialState } from '../../consts/initialState';
 import { Сommodity } from '@/entities/Product';
+import { getProductsIds } from '../services/getProductsIds/getProductsIds';
 
 export const productsSlice = createSlice({
 	name: 'products',
@@ -20,8 +21,22 @@ export const productsSlice = createSlice({
 			})
 			.addCase(getProductsByIds.rejected, (state, action) => {
 				state.isLoading = false;
-				const s = String(action.payload);
-				state.error = s;
+				state.error = String(action.payload);
+			})
+			// ===============================
+			.addCase(getProductsIds.pending, (state) => {
+				state.ids = [];
+				state.products = [];
+				state.error = undefined;
+				state.isLoading = true;
+			})
+			.addCase(getProductsIds.fulfilled, (state, action: PayloadAction<string[]>) => {
+				state.ids = action.payload;
+				// state.isLoading = false;
+			})
+			.addCase(getProductsIds.rejected, (state, action) => {
+				// state.isLoading = false;
+				state.error = String(action.payload);
 			});
 	},
 });

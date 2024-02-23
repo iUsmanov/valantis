@@ -1,7 +1,8 @@
 import { Сommodity } from '@/entities/Product';
 
 export interface ProductsSchema {
-	products: Сommodity[];
+	ids: string[];
+	products?: Сommodity[];
 	isLoading: boolean;
 	error?: string;
 }

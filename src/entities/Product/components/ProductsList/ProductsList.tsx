@@ -7,15 +7,22 @@ import { Product } from '../Product/Product';
 
 interface ProductsListProps {
 	className?: string;
-	products: Сommodity[];
+	products?: Сommodity[];
 	isLoading?: boolean;
+	productsTotalPages: number;
 }
 
 export const ProductsList = memo((props: ProductsListProps) => {
-	const { className, products, isLoading } = props;
+	const { className, products, isLoading, productsTotalPages } = props;
 
 	if (isLoading) {
 		return <div className={cls.loader}>Loading...</div>;
+	}
+
+	if (!products) return null;
+
+	if (productsTotalPages < 1) {
+		return <div className={cls.overlay}>Товаров нет</div>;
 	}
 
 	return (

@@ -1,7 +1,8 @@
 import { ProductsSchema } from '../model/types/productsSchema';
 
 export const initialState: ProductsSchema = {
-	products: [],
+	ids: [],
+	products: undefined,
 	error: '',
 	isLoading: false,
 };

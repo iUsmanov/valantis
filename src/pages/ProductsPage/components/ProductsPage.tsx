@@ -1,6 +1,6 @@
 import { ProductsList } from '@/entities/Product';
 import { MainLayout } from '@/shared/layouts';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { getProductsByIds } from '../model/services/getProductsByIds/getProductsByIds';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { ReducersList, useDynamicModule } from '@/shared/lib/hooks/useDynamicModule/useDynamicModule';
@@ -18,7 +18,6 @@ import { ProductsFilters } from '@/widgets/productsFilters';
 import { getProductsIsLoading } from '../model/selectors/getProductsIsLoading';
 import { useDebounce } from '@/shared/lib/hooks/useDebounce/useDebounce';
 import { getProductsError } from '../model/selectors/getProductsError';
-import cls from './ProductsPage.module.scss';
 
 const reducers: ReducersList = {
 	products: productsReducer,
@@ -33,8 +32,17 @@ export const ProductsPage = memo(() => {
 	const productsIsLoading = useSelector(getProductsIsLoading);
 	const productsError = useSelector(getProductsError);
 
+	const isLoading = useMemo(() => {
+		if (productsIsLoading || products === undefined) {
+			return true;
+		} else {
+			return false;
+		}
+	}, [products, productsIsLoading]);
+
 	const onLoadPage = useDebounce((page: number) => {
 		dispatch(getProductsByIds(page));
+		window.scrollTo(0, 0);
 	}, 600);
 
 	useEffect(() => {
@@ -52,14 +60,6 @@ export const ProductsPage = memo(() => {
 	// 	return () => clearInterval(s);
 	// }, [dispatch, products]);
 
-	if (/* !products ||  */ productsTotalPages < 1) {
-		return <div className={cls.overlay}>Товаров нет</div>;
-	}
-
-	// if (productsIsLoading || !products.length || productsTotalPages < 1) {
-	// 	return <div className={cls.overlay}>Loading...</div>;
-	// }
-
 	// if (productsError) {
 	// 	return <div className={cls.overlay}>Произошла ошибка</div>;
 	// }
@@ -67,10 +67,16 @@ export const ProductsPage = memo(() => {
 	return (
 		<div>
 			<MainLayout
-				content={<ProductsList isLoading={productsIsLoading} products={products} />}
+				content={
+					<ProductsList
+						isLoading={isLoading}
+						products={products}
+						productsTotalPages={productsTotalPages}
+					/>
+				}
 				filters={<ProductsFilters onLoadPage={onLoadPage} />}
 				pagination={
-					!productsIsLoading ? (
+					!isLoading && products?.length ? (
 						<ProductsPagination
 							totalPages={productsTotalPages}
 							productsPage={productsPage}
