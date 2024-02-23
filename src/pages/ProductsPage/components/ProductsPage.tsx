@@ -70,16 +70,3 @@ export const ProductsPage = memo(() => {
 		</div>
 	);
 });
-
-// Есть
-// ProductsPage - pages
-// ProductsList - No
-// ProductsList - entities
-// ProductsFilters - widget
-// ProductsPagination - feature
-
-// 3 Фильтры такие:
-
-// Есть имя ?
-// Введённое название бренда соответ ?
-// Введённая цена соответ ?

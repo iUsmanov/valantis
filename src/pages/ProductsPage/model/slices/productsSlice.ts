@@ -30,7 +30,7 @@ export const productsSlice = createSlice({
 				const s = String(action.payload);
 				state.error = s;
 			})
-			// ===
+			// ==============================================
 			.addCase(getProductsLength.pending, (state) => {
 				state.isLoading = true;
 			})
@@ -38,8 +38,7 @@ export const productsSlice = createSlice({
 				state.totalPages = action.payload;
 			})
 			.addCase(getProductsLength.rejected, (state, action) => {
-				const s = String(action.payload);
-				state.error = s;
+				state.error = String(action.payload);
 			});
 	},
 });
