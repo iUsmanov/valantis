@@ -1,16 +1,18 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ProductsFiltersSchema } from '../types/productsFiltersSchema';
-
-export const initialState: ProductsFiltersSchema = {
-	
-};
+import { initialState } from '../../consts/initialState';
 
 export const productsFiltersSlice = createSlice({
 	name: 'productsFilters',
 	initialState,
 	reducers: {
-		template: (state, action: PayloadAction<string>) => {
-        
+		changeFilterName: (state, action: PayloadAction<string>) => {
+			state.filterName = action.payload;
+		},
+		changeFilterBrand: (state, action: PayloadAction<string>) => {
+			state.filterBrand = action.payload;
+		},
+		changeFilterPrice: (state, action: PayloadAction<string>) => {
+			state.filterPrice = action.payload;
 		},
 	},
 	// extraReducers(builder) {

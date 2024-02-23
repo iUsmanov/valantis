@@ -9,17 +9,7 @@ import { getProductsLength } from '../services/getProductsLength/getProductsLeng
 export const productsSlice = createSlice({
 	name: 'products',
 	initialState,
-	reducers: {
-		changeFilterHasName: (state) => {
-			state.filters.filterHasName = !state.filters.filterHasName;
-		},
-		changeFilterBrand: (state, action: PayloadAction<string>) => {
-			state.filters.filterBrand = action.payload;
-		},
-		changeFilterPrice: (state, action: PayloadAction<string>) => {
-			state.filters.filterPrice = action.payload;
-		},
-	},
+	reducers: {},
 	extraReducers(builder) {
 		builder
 			.addCase(getProductsByIds.pending, (state) => {
@@ -41,12 +31,16 @@ export const productsSlice = createSlice({
 				state.error = s;
 			})
 			// ===
-			.addCase(getProductsLength.pending, (state) => {})
+			.addCase(getProductsLength.pending, (state) => {
+				state.isLoading = true;
+			})
 			.addCase(getProductsLength.fulfilled, (state, action: PayloadAction<number>) => {
 				state.totalPages = action.payload;
+				state.isLoading = false;
 			})
 			.addCase(getProductsLength.rejected, (state, action) => {
 				const s = String(action.payload);
+				state.isLoading = false;
 				state.error = s;
 			});
 	},

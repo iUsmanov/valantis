@@ -4,6 +4,7 @@ import { createReduxStore } from './store';
 import { AnyAction, CombinedState, Reducer, ReducersMapObject } from '@reduxjs/toolkit';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { ProductsSchema } from '@/pages/ProductsPage';
+import { ProductsFiltersSchema } from '@/widgets/productsFilters';
 
 /**
  * StateSchema описывает состояние нашего `store`.
@@ -12,6 +13,7 @@ export interface StateSchema {
 	[rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 
 	// asyncState
+	productsFilters?: ProductsFiltersSchema;
 	products?: ProductsSchema;
 }
 

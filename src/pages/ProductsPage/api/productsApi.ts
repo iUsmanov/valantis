@@ -1,6 +1,7 @@
 // #featureFlags
 import { rtkApi } from '@/shared/api/rtkApi';
 import { Сommodity } from '@/entities/Product';
+import { ProductsFiltersSchema } from '@/widgets/productsFilters';
 
 interface GetProductsIdsOptions {
 	limit: number;
@@ -39,8 +40,23 @@ const productsApi = rtkApi.injectEndpoints({
 				},
 			}),
 		}),
+		getFilteredProductsIds: build.mutation<GetProductsIdsReturn, ProductsFiltersSchema>({
+			query: (filters) => ({
+				url: `/`,
+				method: 'POST',
+				body: {
+					action: 'filter',
+					params: {
+						price: filters.filterPrice ? Number(filters.filterPrice) : undefined,
+						product: filters.filterName ? 'Кольцо' : undefined,
+						brand: filters.filterBrand ? filters.filterBrand : undefined,
+					},
+				},
+			}),
+		}),
 	}),
 });
 
 export const getProductsIdsQuery = productsApi.endpoints.getProductsIds.initiate;
+export const getFilteredProductsIdsQuery = productsApi.endpoints.getFilteredProductsIds.initiate;
 export const getProductsByIdsQuery = productsApi.endpoints.getProductsByIds.initiate;

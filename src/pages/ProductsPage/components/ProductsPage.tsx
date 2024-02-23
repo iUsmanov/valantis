@@ -4,7 +4,7 @@ import { memo, useEffect } from 'react';
 import { getProductsByIds } from '../model/services/getProductsByIds/getProductsByIds';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { ReducersList, useDynamicModule } from '@/shared/lib/hooks/useDynamicModule/useDynamicModule';
-import { productsActions, productsReducer } from '../model/slices/productsSlice';
+import { productsReducer } from '../model/slices/productsSlice';
 import { useSelector } from 'react-redux';
 import { getProducts } from '../model/selectors/getProducts';
 import { ProductsPagination } from '@/features/productsPagination';
@@ -12,7 +12,9 @@ import { getProductsLength } from '../model/services/getProductsLength/getProduc
 import { getProductsTotalPages } from '../model/selectors/getProductsTotalPages';
 import { getProductsPage } from '../model/selectors/getProductsPage';
 import { ProductsFilters } from '@/widgets/productsFilters';
-import { getProductsFilters } from '../model/selectors/getProductsFilters';
+import { getProductsIsLoading } from '../model/selectors/getProductsIsLoading';
+import cls from './ProductsPage.module.scss';
+import { useDebounce } from '@/shared/lib/hooks/useDebounce/useDebounce';
 
 const reducers: ReducersList = {
 	products: productsReducer,
@@ -23,23 +25,11 @@ export const ProductsPage = memo(() => {
 	const products = useSelector(getProducts);
 	const productsTotalPages = useSelector(getProductsTotalPages);
 	const productsPage = useSelector(getProductsPage);
-	const productsFilters = useSelector(getProductsFilters);
+	const productsIsLoading = useSelector(getProductsIsLoading);
 
-	const onLoadPage = (page: number) => {
+	const onLoadPage = useDebounce((page: number) => {
 		dispatch(getProductsByIds(page));
-	};
-
-	const onChangeFilterHasName = () => {
-		dispatch(productsActions.changeFilterHasName());
-	};
-
-	const onChangeFilterBrand = (brand: string) => {
-		dispatch(productsActions.changeFilterBrand(brand));
-	};
-
-	const onChangeFilterPrice = (price: string) => {
-		dispatch(productsActions.changeFilterPrice(price));
-	};
+	}, 600);
 
 	useEffect(() => {
 		dispatch(getProductsByIds(1));
@@ -48,20 +38,19 @@ export const ProductsPage = memo(() => {
 
 	useDynamicModule({ reducers });
 
-	if (!products || productsTotalPages < 1) return null;
+	// if (!products || productsTotalPages < 1) {
+	// 	return null;
+	// }
+
+	if (productsIsLoading || !products.length || productsTotalPages < 1) {
+		return <div className={cls.loader}>Loading...</div>;
+	}
 
 	return (
 		<div>
 			<MainLayout
 				content={<ProductsList products={products} />}
-				filters={
-					<ProductsFilters
-						filters={productsFilters}
-						onChangeFilterHasName={onChangeFilterHasName}
-						onChangeFilterBrand={onChangeFilterBrand}
-						onChangeFilterPrice={onChangeFilterPrice}
-					/>
-				}
+				filters={<ProductsFilters onLoadPage={onLoadPage} />}
 				pagination={
 					<ProductsPagination
 						totalPages={productsTotalPages}

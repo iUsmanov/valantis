@@ -14,7 +14,7 @@ export const Product = memo((props: ProductProps) => {
 	return (
 		<div className={classNames(cls.product, {}, [className])}>
 			<div>ID - {product.id}</div>
-			<div>Название - {product.name}</div>
+			<div>Название - {product.product}</div>
 			<div>Бренд - {product.brand}</div>
 			<div>Цена - {product.price}</div>
 		</div>
