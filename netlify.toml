@@ -1,0 +1,9 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "http://api.valantis.store:40000/*"
+  to = "https://api.valantis.store:40000/"
+  status = 200
