@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkonly=self.webpackChunkonly||[]).push([[856],{856:(e,n,o)=>{o.r(n),o.d(n,{NotFoundPage:()=>s});var u=o(504),r=o(624),s=(0,u.memo)((function(){return(0,r.jsx)("div",{children:"NotFoundPage"})}))}}]);
