@@ -16,4 +16,5 @@ npm run build:prod - Сборка в prod-режиме
 -  Redux/toolkit, RTKQuery
 -  FSD - архитектура
 -  Webpack
+-  TypeScript
 -  и другое.
