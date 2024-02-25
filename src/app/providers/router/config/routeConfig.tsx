@@ -9,7 +9,7 @@ import {
 } from '@/shared/consts/router';
 // eslint-disable-next-line fsd-paths-guard/hierarchy-imports-between-layers
 import { RootLayout } from '@/app/components/RootLayout';
-import { NotFoundPage } from '@/pages/NotFoundPage';
+// import { NotFoundPage } from '@/pages/NotFoundPage';
 import { ForbiddenPage } from '@/pages/ForbiddenPage';
 import { ProductsPage } from '@/pages/ProductsPage';
 import { Redirect } from '../components/Redirect/Redirect';
@@ -29,7 +29,8 @@ const routeConfig: Record<AppRoutes, AppRouteObject> = {
 	},
 	not_found: {
 		path: getRouteNotFound(),
-		element: <NotFoundPage />,
+		// element: <NotFoundPage />,
+		element: <ProductsPage />,
 	},
 };
 

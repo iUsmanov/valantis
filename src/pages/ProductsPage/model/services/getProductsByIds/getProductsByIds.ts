@@ -7,7 +7,7 @@ import { productsPaginationActions } from '@/features/productsPagination';
 import { getProductsIds } from '../getProductsIds/getProductsIds';
 import { getProductsIds as getProductsIdsSelector } from '../../selectors/getProductsIds';
 
-export const getProductsByIds /* : any */ = createAsyncThunk<Сommodity[], number, ThunkConfig<string>>(
+export const getProductsByIds: any = createAsyncThunk<Сommodity[], number, ThunkConfig<string>>(
 	'products/getProductsByIds',
 	async (pageNumber, thunkApi) => {
 		const { rejectWithValue, dispatch, getState } = thunkApi;
@@ -31,9 +31,20 @@ export const getProductsByIds /* : any */ = createAsyncThunk<Сommodity[], numbe
 			dispatch(productsPaginationActions.changePage(pageNumber));
 			return uniqProducts;
 		} catch (error) {
-			// const dsa = dispatch(getProductsByIds(pageNumber));
-			// return dsa.payload;
-			return rejectWithValue('error');
+			const dsa = dispatch(getProductsByIds(pageNumber));
+			// return dispatch(getProductsByIds(pageNumber));
+			if (dsa.type.includes('fulfilled')) {
+				return dsa;
+			}
+			// return rejectWithValue('error');
 		}
 	}
 );
+
+const sleep = (ms: number) => {
+	return new Promise<void>((resolve) => {
+		setTimeout(() => {
+			resolve();
+		}, ms);
+	});
+};

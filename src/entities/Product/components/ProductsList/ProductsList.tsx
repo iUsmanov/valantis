@@ -19,19 +19,20 @@ export const ProductsList = memo((props: ProductsListProps) => {
 		return <div className={cls.loader}>Loading...</div>;
 	}
 
-	if (!products) return null;
+	if (!products) {
+		return null;
+	}
 
-	if (productsTotalPages < 1) {
+	if (productsTotalPages < 1 || !products.length) {
 		return <div className={cls.overlay}>Товаров нет</div>;
 	}
 	console.log(products);
 
 	return (
 		<HStack Tag='section' wrap='wrap' gap='16' className={classNames(cls.products, {}, [className])}>
-			{products.length &&
-				products.map((product) => {
-					return <Product product={product} key={product.id} />;
-				})}
+			{products.map((product) => {
+				return <Product product={product} key={product.id} />;
+			})}
 		</HStack>
 	);
 });

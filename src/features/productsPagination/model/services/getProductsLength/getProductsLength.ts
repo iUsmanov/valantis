@@ -3,7 +3,7 @@ import { ThunkConfig } from '@/app/providers/StoreProvider';
 import { getProductsLimit } from '../../selectors/getProductsLimit';
 import { getProductsIdsQuery } from '@/entities/Product';
 
-export const getProductsLength /* : any */ = createAsyncThunk<number, void, ThunkConfig<string>>(
+export const getProductsLength: any = createAsyncThunk<number, void, ThunkConfig<string>>(
 	'products/getProductsLength',
 	async (_, thunkApi) => {
 		const { rejectWithValue, dispatch, getState } = thunkApi;
@@ -23,7 +23,11 @@ export const getProductsLength /* : any */ = createAsyncThunk<number, void, Thun
 
 			return Math.ceil(productsIds.length / productsLimit);
 		} catch (error) {
+			const dsa = dispatch(getProductsLength());
 			// return dispatch(getProductsLength());
+			if (dsa.type.includes('fulfilled')) {
+				return dispatch(dsa);
+			}
 			return rejectWithValue('error');
 		}
 	}

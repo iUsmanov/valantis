@@ -8,7 +8,7 @@ import {
 } from '@/widgets/productsFilters';
 import { getProductsLimit } from '@/features/productsPagination';
 
-export const getProductsIds /* : any */ = createAsyncThunk<string[], number, ThunkConfig<string>>(
+export const getProductsIds: any = createAsyncThunk<string[], number, ThunkConfig<string>>(
 	'products/getProductsIds',
 	async (pageNumber, thunkApi) => {
 		const { rejectWithValue, dispatch, getState } = thunkApi;
@@ -45,8 +45,12 @@ export const getProductsIds /* : any */ = createAsyncThunk<string[], number, Thu
 
 			return productsIds;
 		} catch (error) {
+			const dsa = dispatch(getProductsIds(pageNumber));
 			// return dispatch(getProductsIds(pageNumber));
-			return rejectWithValue('error');
+			if (dsa.type.includes('fulfilled')) {
+				return dsa;
+			}
+			// return rejectWithValue('error');
 		}
 	}
 );
