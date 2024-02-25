@@ -45,12 +45,15 @@ export const getProductsIds: any = createAsyncThunk<string[], number, ThunkConfi
 
 			return productsIds;
 		} catch (error) {
-			const dsa = dispatch(getProductsIds(pageNumber));
-			// return dispatch(getProductsIds(pageNumber));
-			if (dsa.type.includes('fulfilled')) {
-				return dsa;
-			}
-			// return rejectWithValue('error');
+			const dsa: any = dispatch(getProductsIds(pageNumber));
+
+			const promise: any = await dsa.unwrap();
+
+			promise.catch(() => {
+				return dispatch(getProductsIds(pageNumber));
+			});
+
+			return promise;
 		}
 	}
 );

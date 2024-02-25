@@ -40,11 +40,3 @@ export const getProductsByIds: any = createAsyncThunk<Сommodity[], number, Thun
 		}
 	}
 );
-
-const sleep = (ms: number) => {
-	return new Promise<void>((resolve) => {
-		setTimeout(() => {
-			resolve();
-		}, ms);
-	});
-};

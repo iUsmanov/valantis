@@ -73,18 +73,6 @@ export const ProductsPage = memo(() => {
 
 	useDynamicModule({ reducers });
 
-	// useEffect(() => {
-	// 	const s = setInterval(() => {
-	// 		console.log(products);
-	// 	}, 50);
-
-	// 	return () => clearInterval(s);
-	// }, [dispatch, products]);
-
-	// if (productsError) {
-	// 	return <div className={cls.overlay}>Произошла ошибка</div>;
-	// }
-
 	return (
 		<div>
 			<MainLayout
