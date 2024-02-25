@@ -28,10 +28,13 @@ export const ProductsList = memo((props: ProductsListProps) => {
 	}
 
 	return (
-		<HStack Tag='section' wrap='wrap' gap='16' className={classNames(cls.products, {}, [className])}>
-			{products.map((product) => {
-				return <Product product={product} key={product.id} />;
-			})}
-		</HStack>
+		<div className={classNames('', {}, [className])}>
+			<h3 className={cls.header}>Товары</h3>
+			<HStack Tag='section' wrap='wrap' gap='16' className={cls.products}>
+				{products.map((product) => {
+					return <Product product={product} key={product.id} />;
+				})}
+			</HStack>
+		</div>
 	);
 });

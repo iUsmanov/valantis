@@ -49,9 +49,22 @@ export const ProductsFilters = memo((props: ProductsFiltersProps) => {
 
 	return (
 		<VStack gap='16' className={classNames(cls.productsFilters, {}, [className])}>
+			<h3 className={cls.header}>Фильтры</h3>
 			<Input label='Имя' value={productsFilterByName} onChange={onChangeFilterHasName} />
 			<Input label='Бренд' value={productsFilterByBrand} onChange={onChangeFilterBrand} />
 			<Input label='Цена' value={productsFilterByPrice} onChange={onChangeFilterPrice} />
 		</VStack>
 	);
 });
+
+/* 
+
+		<div className={classNames('', {}, [className])}>
+			<VStack gap='16' className={cls.productsFilters}>
+				<Input label='Имя' value={productsFilterByName} onChange={onChangeFilterHasName} />
+				<Input label='Бренд' value={productsFilterByBrand} onChange={onChangeFilterBrand} />
+				<Input label='Цена' value={productsFilterByPrice} onChange={onChangeFilterPrice} />
+			</VStack>
+		</div>
+
+*/
