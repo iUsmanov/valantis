@@ -11,8 +11,6 @@ export const rtkApi = createApi({
 			if (token) {
 				headers.set('X-Auth', token);
 			}
-			// headers.set('Access-Control-Allow-Origin', __API__);
-			// headers.set('Access-Control-Allow-Methods', 'GET,POST');
 
 			return headers;
 		},
