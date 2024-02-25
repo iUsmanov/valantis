@@ -9,3 +9,11 @@ npm run build:prod - Сборка в prod-режиме
 ```
 
 ---
+
+В проекте использовал:
+
+-  React
+-  Redux/toolkit, RTKQuery
+-  FSD - архитектура
+-  Webpack
+-  и другое.
