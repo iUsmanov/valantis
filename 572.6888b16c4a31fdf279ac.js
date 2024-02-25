@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkonly=self.webpackChunkonly||[]).push([[572],{572:(e,n,r)=>{r.r(n),r.d(n,{ForbiddenPage:()=>c});var s=r(504),u=r(624),c=(0,s.memo)((function(){return(0,u.jsx)("div",{children:"FORBIDDENPAGE"})}))}}]);
