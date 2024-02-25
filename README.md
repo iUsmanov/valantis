@@ -18,3 +18,5 @@ npm run build:prod - Сборка в prod-режиме
 -  Webpack
 -  TypeScript
 -  и другое.
+
+Дизайн оставляет желать лучшего.
