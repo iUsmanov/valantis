@@ -31,10 +31,10 @@ export const getProductsByIds: any = createAsyncThunk<Сommodity[], number, Thun
 			dispatch(productsPaginationActions.changePage(pageNumber));
 			return uniqProducts;
 		} catch (error) {
-			const dsa = dispatch(getProductsByIds(pageNumber));
+			const action = dispatch(getProductsByIds(pageNumber));
 			// return dispatch(getProductsByIds(pageNumber));
-			if (dsa.type.includes('fulfilled')) {
-				return dsa;
+			if (action.type.includes('fulfilled')) {
+				return action;
 			}
 			// return rejectWithValue('error');
 		}

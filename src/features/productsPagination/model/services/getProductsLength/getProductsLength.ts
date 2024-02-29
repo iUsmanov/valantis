@@ -23,10 +23,10 @@ export const getProductsLength: any = createAsyncThunk<number, void, ThunkConfig
 
 			return Math.ceil(productsIds.length / productsLimit);
 		} catch (error) {
-			const dsa = dispatch(getProductsLength());
+			const action = dispatch(getProductsLength());
 			// return dispatch(getProductsLength());
-			if (dsa.type.includes('fulfilled')) {
-				return dispatch(dsa);
+			if (action.type.includes('fulfilled')) {
+				return dispatch(action);
 			}
 			return rejectWithValue('error');
 		}
