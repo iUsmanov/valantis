@@ -20,3 +20,5 @@ npm run build:prod - Сборка в prod-режиме
 -  и другое.
 
 Дизайн оставляет желать лучшего.
+
+Готовый рабочий сайт - https://valantis-idris.netlify.app/products
