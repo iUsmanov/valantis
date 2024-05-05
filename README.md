@@ -1,4 +1,4 @@
-# Getting started
+# Тестовое задание для valantis
 
 ## Запуск проекта
 
